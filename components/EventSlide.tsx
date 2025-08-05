@@ -54,10 +54,21 @@ function truncate(text: string, max = 300) {
   return text.slice(0, max).replace(/\s+\S*$/, '') + '…';
 }
 
+
 export const EventSlide: React.FC<EventSlideProps> = ({ event, orientation }) => {
-//  console.log('EventSlide event data:', event);
   // Fallback image or color block
   const imageUrl = event.photo_url || '';
+  // Track window size for display
+  const [dimensions, setDimensions] = React.useState({ width: 0, height: 0 });
+  React.useEffect(() => {
+    function updateDimensions() {
+      setDimensions({ width: window.innerWidth, height: window.innerHeight });
+    }
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
+
   const image = (
     <div
       className={`flex items-center justify-center w-full ${orientation === 'portrait' ? 'h-[50svh]' : 'h-full'} bg-[#000e54] rounded-lg`}
@@ -69,8 +80,8 @@ export const EventSlide: React.FC<EventSlideProps> = ({ event, orientation }) =>
           alt={getDisplayTitle(event.title)}
           className="object-contain max-h-[90%] max-w-[90%] drop-shadow-lg rounded-md"
           style={{ display: 'block', margin: '0 auto' }}
-          width={600}
-          height={400}
+          width={500}
+          height={500}
         />
       ) : (
         <span className="text-3xl text-gray-400">No Image</span>
@@ -82,6 +93,20 @@ export const EventSlide: React.FC<EventSlideProps> = ({ event, orientation }) =>
     <div className={`flex ${orientation === 'portrait' ? 'flex-col' : 'flex-row'} w-full h-full gap-6`}>
       <div className={orientation === 'portrait' ? '' : 'w-1/2 h-full'}>{image}</div>
       <div className={`relative flex flex-col justify-center ${orientation === 'portrait' ? '' : 'w-1/2'} p-[3vmin]`}>
+        {/* Screen dimensions in top right */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 8,
+            right: 12,
+            fontSize: 16,
+            color: '#888',
+            zIndex: 100,
+            pointerEvents: 'none',
+          }}
+        >
+          {dimensions.width}x{dimensions.height}px
+        </div>
         <h2 className="text-[clamp(1.5rem,4vw,3rem)] leading-tight mb-[2.5vmin] text-[#000e54]">{getDisplayTitle(event.title)}</h2>
         <h3 className="flex items-center gap-3 text-[clamp(1rem,2vw,1.3rem)] opacity-80 mb-[2.5vmin] font-bold min-h-[2.5em] text-[#000e54]">
           <Icon name="calendar" size="1.5em" />

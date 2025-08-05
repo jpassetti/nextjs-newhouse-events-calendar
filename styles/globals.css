@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+/* Sherman Sans Font Faces */
+@font-face {
+  font-family: 'ShermanSans';
+  src:
+    url('https://assets.syracuse.edu/fonts/shermansans-book.woff2') format('woff2'),
+    url('https://assets.syracuse.edu/fonts/shermansans-book.woff') format('woff'),
+    url('https://assets.syracuse.edu/fonts/shermansans-book.eot') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0020-007F, U+00A9, U+00AE, U+2013-201D;
+}
+@font-face {
+  font-family: 'ShermanSans';
+  src:
+    url('https://assets.syracuse.edu/fonts/shermansans-book-intl.woff2') format('woff2'),
+    url('https://assets.syracuse.edu/fonts/shermansans-book-intl.woff') format('woff'),
+    url('https://assets.syracuse.edu/fonts/shermansans-book-intl.eot') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+00A0-00A8, U+00C0-024F, U+201E-2026;
+}
+@font-face {
+  font-family: 'ShermanSans';
+  src:
+    url('https://assets.syracuse.edu/fonts/shermansans-bookitalic.woff2') format('woff2'),
+    url('https://assets.syracuse.edu/fonts/shermansans-bookitalic.woff') format('woff'),
+    url('https://assets.syracuse.edu/fonts/shermansans-bookitalic.eot') format('embedded-opentype');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0020-007F, U+00A9, U+00AE, U+2013-201D;
+}
+@font-face {
+  font-family: 'ShermanSans';
+  src:
+    url('https://assets.syracuse.edu/fonts/shermansans-bookitalic-intl.woff2') format('woff2'),
+    url('https://assets.syracuse.edu/fonts/shermansans-bookitalic-intl.woff') format('woff'),
+    url('https://assets.syracuse.edu/fonts/shermansans-bookitalic-intl.eot') format('embedded-opentype');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+00A0-00A8, U+00C0-024F, U+201E-2026;
+}
+@font-face {
+  font-family: 'ShermanSans';
+  src:
+    url('https://assets.syracuse.edu/fonts/shermansans-bold.woff2') format('woff2'),
+    url('https://assets.syracuse.edu/fonts/shermansans-bold.woff') format('woff'),
+    url('https://assets.syracuse.edu/fonts/shermansans-bold.eot') format('embedded-opentype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0020-007F, U+00A9, U+00AE, U+2013-201D;
+}
+@font-face {
+  font-family: 'ShermanSans';
+  src:
+    url('https://assets.syracuse.edu/fonts/shermansans-bold-intl.woff2') format('woff2'),
+    url('https://assets.syracuse.edu/fonts/shermansans-bold-intl.woff') format('woff'),
+    url('https://assets.syracuse.edu/fonts/shermansans-bold-intl.eot') format('embedded-opentype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+00A0-00A8, U+00C0-024F, U+201E-2026;
+}
+@font-face {
+  font-family: 'ShermanSans';
+  src:
+    url('https://assets.syracuse.edu/fonts/shermansans-bolditalic.woff2') format('woff2'),
+    url('https://assets.syracuse.edu/fonts/shermansans-bolditalic.woff') format('woff'),
+    url('https://assets.syracuse.edu/fonts/shermansans-bolditalic.eot') format('embedded-opentype');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0020-007F, U+00A9, U+00AE, U+2013-201D;
+}
+@font-face {
+  font-family: 'ShermanSans';
+  src:
+    url('https://assets.syracuse.edu/fonts/shermansans-bolditalic-intl.woff2') format('woff2'),
+    url('https://assets.syracuse.edu/fonts/shermansans-bolditalic-intl.woff') format('woff'),
+    url('https://assets.syracuse.edu/fonts/shermansans-bolditalic-intl.eot') format('embedded-opentype');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+00A0-00A8, U+00C0-024F, U+201E-2026;
+}
+
+
+
+html, body, #__next, main {
+  width: 100vw;
+  height: 100vh;
+  min-height: 0;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  color: black;
+  font-family: 'ShermanSans', Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'ShermanSans', Arial, sans-serif;
+  font-weight: bold;
+  line-height: 1.05;
+}
+
+p, span, a, li, ul, ol, button, input, textarea {
+  font-family: 'ShermanSans', Arial, sans-serif;
+}
+
+/* Responsive orientation helpers */
+@media (orientation: portrait) {
+  .portrait\:flex-col { flex-direction: column; }
+}
+@media (orientation: landscape) {
+  .landscape\:flex-row { flex-direction: row; }
+}
+
+/* Container queries and fluid type example */
+:root {
+  --safe-margin: 3vmin;
+}
+
+/* Pager dot animation */
+.pager-dot {
+  transition: background 0.3s;
+}

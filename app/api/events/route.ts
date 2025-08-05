@@ -1,7 +1,6 @@
 // /app/api/events/route.ts
 import { NextResponse } from 'next/server';
-import { normalizeEvents } from '../../../lib/normalizeEvents';
-import { EventItem } from '../../../types/EventItem';
+import type { SUEvent, SUEventWrapper, SUEventsResponse } from '../../../types/SUEvent';
 
 const EVENTS_API_URL = process.env.EVENTS_API_URL;
 
@@ -13,14 +12,14 @@ export async function GET() {
   const res = await fetch(EVENTS_API_URL, { next: { revalidate: 3600 } });
     if (!res.ok) throw new Error('Upstream error');
     const raw = await res.json();
-    let events: any[] = normalizeEvents(raw);
+  // raw is SUEventsResponse
+  const suEventsResponse = raw as SUEventsResponse;
+  let events: SUEvent[] = (suEventsResponse.events || []).map((e: SUEventWrapper) => e.event);
     // Helper to get event start date string
-    function getEventStart(ev: any): string {
-      // Try event_instances[0].event_instance.start, then first_date, then start
+    function getEventStart(ev: SUEvent): string {
       return (
         ev.event_instances?.[0]?.event_instance?.start ||
         ev.first_date ||
-        ev.start ||
         ''
       );
     }
@@ -36,7 +35,16 @@ export async function GET() {
     });
     events = events.slice(0, 6);
     return NextResponse.json(events);
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message || 'Failed to fetch events' }, { status: 500 });
+  } catch (e: unknown) {
+    let message = 'Failed to fetch events';
+    if (
+      typeof e === 'object' &&
+      e !== null &&
+      'message' in e &&
+      typeof (e as Record<string, unknown>).message === 'string'
+    ) {
+      message = (e as { message: string }).message;
+    }
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

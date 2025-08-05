@@ -2,7 +2,7 @@
 'use client';
 import React, { useEffect, useState, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { EventItem } from '../types/EventItem';
+import type { SUEvent } from '../types/SUEvent';
 import { EventSlide } from './EventSlide';
 
 const DISPLAY_MS = 10_000;
@@ -13,7 +13,7 @@ function getOrientation() {
 }
 
 export const EventsRotator: React.FC = () => {
-  const [events, setEvents] = useState<EventItem[] | null>(null);
+  const [events, setEvents] = useState<SUEvent[] | null>(null);
   const [index, setIndex] = useState(0);
   const [orientation, setOrientation] = useState<'portrait' | 'landscape'>(getOrientation());
   const [error, setError] = useState<string | null>(null);
@@ -29,7 +29,7 @@ export const EventsRotator: React.FC = () => {
         setEvents(data);
         setError(null);
         localStorage.setItem('events', JSON.stringify(data));
-      } catch (e: any) {
+      } catch {
         setError('Could not fetch events. Showing cached data if available.');
         const cached = localStorage.getItem('events');
         if (cached) setEvents(JSON.parse(cached));
@@ -79,7 +79,7 @@ export const EventsRotator: React.FC = () => {
         </motion.div>
       </AnimatePresence>
       {/* Pager dots */}
-  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-50 bg-black px-4 py-2 rounded-full">
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-50 bg-black px-4 py-2 rounded-full">
         {events.map((_, i) => (
           <span
             key={i}

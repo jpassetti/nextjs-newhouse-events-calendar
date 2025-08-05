@@ -9,4 +9,9 @@ export type EventItem = {
   url?: string;       // details page
   room_number?: string;
   location_name?: string;
+  // API compatibility fields
+  photo_url?: string;
+  image_url?: string;
+  description_text?: string;
+  description?: string;
 };

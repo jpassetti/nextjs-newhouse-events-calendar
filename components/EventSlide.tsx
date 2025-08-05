@@ -1,17 +1,21 @@
 // /components/EventSlide.tsx
 
 import React from 'react';
-import { EventItem } from '../types/EventItem';
-import Logo from './Logo';
+
+import type { SUEvent } from '../types/SUEvent';
 import Icon from './Icon';
 import { getFormattedLocation } from '../lib/locationLookup';
+import Image from 'next/image';
 
 interface EventSlideProps {
-  event: any;
+  event: SUEvent;
   orientation: 'portrait' | 'landscape';
 }
 
-function formatDate(event: any) {
+
+
+
+function formatDate(event: SUEvent) {
   // Prefer event_instances[0].event_instance.start, fallback to first_date
   const dateStr = event?.event_instances?.[0]?.event_instance?.start || event?.first_date;
   if (!dateStr) return '';
@@ -23,7 +27,7 @@ function formatDate(event: any) {
   const monthIdx = date.getMonth();
   const month = apMonths[monthIdx];
   const day = date.getDate();
-  let hour = date.getHours();
+  const hour = date.getHours();
   const minute = date.getMinutes();
   const isAM = hour < 12;
   let hour12 = hour % 12;
@@ -53,18 +57,20 @@ function truncate(text: string, max = 300) {
 export const EventSlide: React.FC<EventSlideProps> = ({ event, orientation }) => {
 //  console.log('EventSlide event data:', event);
   // Fallback image or color block
-  const imageUrl = event.photo_url || event.imageUrl || event.image_url || '';
+  const imageUrl = event.photo_url || '';
   const image = (
     <div
       className={`flex items-center justify-center w-full ${orientation === 'portrait' ? 'h-[50svh]' : 'h-full'} bg-[#000e54] rounded-lg`}
       style={{ position: 'relative' }}
     >
       {imageUrl ? (
-        <img
+        <Image
           src={imageUrl}
           alt={getDisplayTitle(event.title)}
           className="object-contain max-h-[90%] max-w-[90%] drop-shadow-lg rounded-md"
           style={{ display: 'block', margin: '0 auto' }}
+          width={500}
+          height={500}
         />
       ) : (
         <span className="text-3xl text-gray-400">No Image</span>
@@ -97,7 +103,7 @@ export const EventSlide: React.FC<EventSlideProps> = ({ event, orientation }) =>
         })()}
         {(event.description_text || event.description) && (
           <div className="text-[clamp(1rem,2vw,1.2rem)] opacity-90 max-w-prose mb-0 text-[#000e54]">
-            {truncate(event.description_text || event.description)}
+            {truncate(event.description_text || event.description || '')}
           </div>
         )}
         {/* Gradient overlay for overflow content */}

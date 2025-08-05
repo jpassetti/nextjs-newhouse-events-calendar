@@ -69,8 +69,8 @@ export const EventSlide: React.FC<EventSlideProps> = ({ event, orientation }) =>
           alt={getDisplayTitle(event.title)}
           className="object-contain max-h-[90%] max-w-[90%] drop-shadow-lg rounded-md"
           style={{ display: 'block', margin: '0 auto' }}
-          width={500}
-          height={500}
+          width={600}
+          height={400}
         />
       ) : (
         <span className="text-3xl text-gray-400">No Image</span>

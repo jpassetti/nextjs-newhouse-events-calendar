@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import "../styles/globals.css";
+  import "../styles/legacy-event-card.css";
+  import "../styles/globals.css";
 
 export const metadata: Metadata = {
   title: "Newhouse Events 2025-26",

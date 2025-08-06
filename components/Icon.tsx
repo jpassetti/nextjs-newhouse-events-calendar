@@ -9,8 +9,14 @@ interface IconProps {
 const Icon: React.FC<IconProps> = ({ name, size = 24, className = '' }) => {
   if (name === 'calendar') {
     return (
-      <span className={`inline-flex items-center justify-center w-[1.5em] h-[1.5em] ${className}`}
-        style={{ minWidth: size, minHeight: size }}
+      <span
+        style={{
+          display: 'inline-block',
+          width: typeof size === 'number' ? size : '1.5em',
+          height: typeof size === 'number' ? size : '1.5em',
+          verticalAlign: 'middle',
+        }}
+        className={className}
         aria-hidden="true"
       >
         <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -23,8 +29,14 @@ const Icon: React.FC<IconProps> = ({ name, size = 24, className = '' }) => {
   }
   if (name === 'location') {
     return (
-      <span className={`inline-flex items-center justify-center w-[1.5em] h-[1.5em] ${className}`}
-        style={{ minWidth: size, minHeight: size }}
+      <span
+        style={{
+          display: 'inline-block',
+          width: typeof size === 'number' ? size : '1.5em',
+          height: typeof size === 'number' ? size : '1.5em',
+          verticalAlign: 'middle',
+        }}
+        className={className}
         aria-hidden="true"
       >
         <svg width={size} height={size} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

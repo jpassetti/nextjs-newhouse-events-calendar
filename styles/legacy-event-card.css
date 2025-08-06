@@ -34,7 +34,7 @@
 }
   /* Landscape: table/table-cell for vertical centering and full height */
 /* Landscape: float for side-by-side layout */
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 1200px) {
   .event-card {
     display: table;
     width: 100%;
@@ -109,7 +109,7 @@
 }
 
 /* Responsive: stack on small screens */
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 1199px) {
   .event-image,
   .event-details {
     float: none;

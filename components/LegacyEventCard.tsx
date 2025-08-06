@@ -11,7 +11,7 @@ export interface LegacyEventCardProps {
 
 export const LegacyEventCard: React.FC<LegacyEventCardProps> = ({ event }) => {
   // Fallbacks for missing data
-  const imageUrl = event.photo_url || 'https://via.placeholder.com/300x200';
+  const imageUrl = event.photo_url || null;
   const title = getDisplayTitle(event.title);
   const dateStr = event?.event_instances?.[0]?.event_instance?.start || event?.first_date || '';
   const date = formatDate(dateStr);
@@ -23,7 +23,7 @@ export const LegacyEventCard: React.FC<LegacyEventCardProps> = ({ event }) => {
     <div className="event-card">
       <div className="event-image">
         <div className="event-image-inner">
-          <img src={imageUrl} alt={title} width="300" height="200" />
+          {imageUrl && <img src={imageUrl} alt={title} width="300" height="200" />}
         </div>
       </div>
       <div className="event-details">

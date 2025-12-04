@@ -26,12 +26,10 @@ export const LegacyEventCard: React.FC<LegacyEventCardProps> = ({ event, orienta
   
   // Only truncate on portrait; show full description on landscape
   const rawDescription = event.description_text || event.description || '';
-  const isTruncated = orientation === 'portrait';
+  const isTruncated = true; // Always truncate
   
-  // On portrait: truncate plain text; on landscape: render full HTML as React elements
-  const description = isTruncated
-    ? truncate(parseHtmlDescription(rawDescription)) 
-    : parseHtmlToReact(rawDescription);
+  // Always truncate and parse to plain text
+  const description = truncate(parseHtmlDescription(rawDescription));
   
   const formatted = event.room_number ? getFormattedLocation(event.room_number) : (event.location_name || '');
 

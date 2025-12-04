@@ -184,6 +184,7 @@
     padding: 0;
     margin: 0 auto;
     text-align: left;
+    position: relative;
   }
   
   .landscape-rotator .event-image-container {
@@ -192,6 +193,7 @@
     height: auto;
     padding: 0;
     background-color: #000e54;
+    position: static;
   }
   
   .landscape-rotator .event-image img {
@@ -210,6 +212,12 @@
   .landscape-rotator .event-details-inner {
     padding: 0;
     text-align: left;
+  }
+
+  .landscape-rotator .event-qr-code {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
   }
 }
 

@@ -87,12 +87,17 @@ export const EventsRotator: React.FC = () => {
       {orientation === 'portrait' ? (
         <LegacyEventCard event={events[index]} orientation={orientation} />
       ) : (
-        <div className={`landscape-rotator ${landscapeClass}`}>
-          {Array.from({ length: cardsToShow }).map((_, i) => (
-            <div key={i} className="landscape-card-wrapper">
-              <LegacyEventCard event={events[i]} orientation={orientation} />
-            </div>
-          ))}
+        <div className="landscape-layout">
+          <div className="landscape-banner">
+            <img src="/upcoming-events.svg" alt="Upcoming events" />
+          </div>
+          <div className={`landscape-rotator ${landscapeClass}`}>
+            {Array.from({ length: cardsToShow }).map((_, i) => (
+              <div key={i} className="landscape-card-wrapper">
+                <LegacyEventCard event={events[i]} orientation={orientation} />
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>

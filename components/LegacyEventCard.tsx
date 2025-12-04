@@ -65,12 +65,12 @@ export const LegacyEventCard: React.FC<LegacyEventCardProps> = ({ event, orienta
           <h2 className={`event-title ${orientation === 'landscape' ? 'event-title--medium' : ''}`}>{title}</h2>
           <div className="event-date-location-wrapper">
           <div className="event-date">
-            <span className="event-icon-box"><Icon name="calendar" size={24} /></span>
+            <span className="event-icon-box"><Icon name="calendar" size={20} /></span>
             <span className="event-date-text">{date}</span>
           </div>
           {event.room_number && (
             <div className="event-location">
-              <span className="event-icon-box"><Icon name="location" size={24} /></span>
+              <span className="event-icon-box"><Icon name="location" size={20} /></span>
               <span className="event-location-text">
                 {event.room_number && <span dangerouslySetInnerHTML={{ __html: formatted }} />}
               </span>

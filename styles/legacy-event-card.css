@@ -4,12 +4,15 @@
   height: 100vh;
   margin: 0;
   border: none;
+  border-radius: 8px;
   background: #fff;
   padding: 1rem;
   font-family: 'ShermanSans', Arial, sans-serif;
   font-size: 16px;
   color: #000e54;
   box-sizing: border-box;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
 }
 
 /* Image container with relative positioning for QR code */
@@ -29,7 +32,6 @@
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 4px;
   max-height: 50vh;
 }
 
@@ -47,11 +49,11 @@
 
 .event-details {
   width: 100%;
-  padding: 0;
+  padding: 1.5rem;
 }
 
 .event-details-inner {
-  padding: 1rem;
+  padding: 1.5rem;
 }
 
 /* QR code message */
@@ -98,12 +100,12 @@
     display: table-cell;
     width: 50%;
     height: 100%;
-    padding: 0;
+    padding: 1.5rem;
     vertical-align: middle;
     /* background-color: white; */
   }
   .event-details-inner {
-    padding: 1rem;
+    padding: 1.5rem;
     overflow-y: auto;
   }
 }
@@ -205,7 +207,7 @@
     display: block;
     width: 100%;
     height: auto;
-    padding: 1rem;
+    padding: 1.5rem;
     text-align: left;
   }
   

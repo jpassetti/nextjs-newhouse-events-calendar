@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import QRCode from 'qrcode';
 import type { SUEvent } from '../types/SUEvent';
-import { getDisplayTitle, truncate, formatDate, parseHtmlDescription, parseHtmlToReact, nameToSlug } from '../lib/eventUtils';
+import { getDisplayTitle, truncate, formatDate, parseHtmlDescription, parseHtmlToReact } from '../lib/eventUtils';
 import { getFormattedLocation } from '../lib/locationLookup';
 import Icon from './Icon';
 

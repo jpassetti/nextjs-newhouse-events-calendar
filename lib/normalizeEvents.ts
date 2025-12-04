@@ -10,15 +10,15 @@ function isEventWrapper(obj: unknown): obj is { event?: unknown } {
 
 function looksLikeSUEvent(obj: unknown): obj is SUEvent {
   if (!isRecord(obj)) return false;
-  return (typeof (obj as any).id === 'number' || typeof (obj as any).id === 'string') && typeof (obj as any).title === 'string';
+  return (typeof obj.id === 'number' || typeof obj.id === 'string') && typeof obj.title === 'string';
 }
 
 export function normalizeEvents(raw: unknown): SUEvent[] {
   // Handle shapes: { events: [...] } or { data: { events: [...] } }
   let candidate: unknown[] = [];
   if (isRecord(raw)) {
-    if (Array.isArray((raw as any).events)) candidate = (raw as any).events;
-    else if (isRecord((raw as any).data) && Array.isArray(((raw as any).data as any).events)) candidate = ((raw as any).data as any).events;
+    if (Array.isArray(raw.events)) candidate = raw.events;
+    else if (isRecord(raw.data) && Array.isArray(raw.data.events)) candidate = raw.data.events;
   }
 
   const events: SUEvent[] = [];

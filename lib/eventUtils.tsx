@@ -226,12 +226,12 @@ export async function fetchDirectoryPersonByContactName(contactName?: string, op
     const url = `${baseUrl}?slug=${encodeURIComponent(slug)}&_fields=id,title,slug,meta`;
     const data = await fetchWithTimeout(url);
     if (Array.isArray(data) && data.length > 0) {
-      const person = data[0] as any;
-      const meta = person?.meta?.person_meta || {};
-      const displayName = meta?.name?.display_name || person?.title?.rendered || contactName;
-      const email = meta?.email?.address || meta?.email || meta?.contact?.email || null;
-      const phone = meta?.phone?.number || meta?.phone || meta?.contact?.phone || null;
-      const image = meta?.images?.profile_image?.src || null;
+      const person = data[0] as unknown as Record<string, unknown>;
+      const meta = (person?.meta as Record<string, unknown>)?.person_meta as Record<string, unknown> || {};
+      const displayName = ((meta?.name as Record<string, unknown>)?.display_name as string) || ((person?.title as Record<string, unknown>)?.rendered as string) || contactName;
+      const email = ((meta?.email as Record<string, unknown>)?.address as string) || (meta?.email as string) || ((meta?.contact as Record<string, unknown>)?.email as string) || null;
+      const phone = ((meta?.phone as Record<string, unknown>)?.number as string) || (meta?.phone as string) || ((meta?.contact as Record<string, unknown>)?.phone as string) || null;
+      const image = (((meta?.images as Record<string, unknown>)?.profile_image as Record<string, unknown>)?.src as string) || null;
       return { name: displayName, email, phone, image, raw: person };
     }
   }

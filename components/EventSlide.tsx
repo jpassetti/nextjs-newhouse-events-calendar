@@ -5,7 +5,7 @@ import React from 'react';
 import type { SUEvent } from '../types/SUEvent';
 import Icon from './Icon';
 import { getFormattedLocation } from '../lib/locationLookup';
-import { getDisplayTitle, truncate, formatDate as formatDateStr } from '../lib/eventUtils';
+import { getDisplayTitle, formatDate as formatDateStr } from '../lib/eventUtils';
 import Image from 'next/image';
 
 interface EventSlideProps {

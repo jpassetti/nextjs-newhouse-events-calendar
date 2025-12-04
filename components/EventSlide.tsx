@@ -5,6 +5,7 @@ import React from 'react';
 import type { SUEvent } from '../types/SUEvent';
 import Icon from './Icon';
 import { getFormattedLocation } from '../lib/locationLookup';
+import { getDisplayTitle, truncate, formatDate as formatDateStr } from '../lib/eventUtils';
 import Image from 'next/image';
 
 interface EventSlideProps {
@@ -15,44 +16,7 @@ interface EventSlideProps {
 
 
 
-function formatDate(event: SUEvent) {
-  // Prefer event_instances[0].event_instance.start, fallback to first_date
-  const dateStr = event?.event_instances?.[0]?.event_instance?.start || event?.first_date;
-  if (!dateStr) return '';
-  const date = new Date(dateStr);
-  const apMonths = [
-    'Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'
-  ];
-  const weekday = date.toLocaleString('en-US', { weekday: 'long', timeZone: 'America/New_York' });
-  const monthIdx = date.getMonth();
-  const month = apMonths[monthIdx];
-  const day = date.getDate();
-  const hour = date.getHours();
-  const minute = date.getMinutes();
-  const isAM = hour < 12;
-  let hour12 = hour % 12;
-  if (hour12 === 0) hour12 = 12;
-  const minStr = minute.toString().padStart(2, '0');
-  const ampm = isAM ? 'a.m.' : 'p.m.';
-  return `${weekday}, ${month} ${day}, ${hour12}:${minStr} ${ampm}`;
-}
-
-function getDisplayTitle(title: string) {
-  if (!title) return '';
-  if (title.startsWith('Newhouse School | ')) {
-    return title.split(' | ').slice(1).join(' | ');
-  }
-  if (title.startsWith('Newhouse | ')) {
-    return title.split(' | ').slice(1).join(' | ');
-  }
-  return title;
-}
-
-function truncate(text: string, max = 300) {
-  if (!text) return '';
-  if (text.length <= max) return text;
-  return text.slice(0, max).replace(/\s+\S*$/, '') + '…';
-}
+// formatting helpers moved to lib/eventUtils.ts
 
 
 export const EventSlide: React.FC<EventSlideProps> = ({ event, orientation }) => {
@@ -110,7 +74,7 @@ export const EventSlide: React.FC<EventSlideProps> = ({ event, orientation }) =>
         <h2 className="text-[clamp(1.5rem,4vw,3rem)] leading-tight mb-[2.5vmin] text-[#000e54]">{getDisplayTitle(event.title)}</h2>
         <h3 className="flex items-center gap-3 text-[clamp(1rem,2vw,1.3rem)] opacity-80 mb-[2.5vmin] font-bold min-h-[2.5em] text-[#000e54]">
           <Icon name="calendar" size="1.5em" />
-          <span className="flex items-center">{formatDate(event)}</span>
+          <span className="flex items-center">{formatDateStr(event?.event_instances?.[0]?.event_instance?.start || event?.first_date || '')}</span>
         </h3>
         {(() => {
           const formatted = event.room_number ? getFormattedLocation(event.room_number) : (event.location_name || '');
@@ -128,7 +92,7 @@ export const EventSlide: React.FC<EventSlideProps> = ({ event, orientation }) =>
         })()}
         {(event.description_text || event.description) && (
           <div className="text-[clamp(1rem,2vw,1.2rem)] opacity-90 max-w-prose mb-0 text-[#000e54]">
-            {truncate(event.description_text || event.description || '')}
+            {event.description_text || event.description || ''}
           </div>
         )}
         {/* Gradient overlay for overflow content */}

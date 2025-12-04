@@ -9,7 +9,10 @@ const DISPLAY_MS = 10_000;
 export const EventsRotator: React.FC = () => {
   const [events, setEvents] = useState<SUEvent[] | null>(null);
   const [index, setIndex] = useState(0);
-  // Removed unused orientation state
+  const [orientation, setOrientation] = useState<'portrait' | 'landscape'>(() => {
+    if (typeof window === 'undefined') return 'landscape';
+    return window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
+  });
   const [error, setError] = useState<string | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -33,17 +36,39 @@ export const EventsRotator: React.FC = () => {
     fetchEvents();
   }, []);
 
-  // Rotation logic
+  // Rotation logic: only run when in portrait mode. In landscape we'll show three static cards.
   useEffect(() => {
     if (!events || events.length === 0) return;
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    intervalRef.current = setInterval(() => {
-      setIndex(i => (i + 1) % events.length);
-    }, DISPLAY_MS);
+    // Clear any existing interval first
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+    if (orientation === 'portrait') {
+      // Start rotating in portrait
+      intervalRef.current = setInterval(() => {
+        setIndex(i => (i + 1) % events.length);
+      }, DISPLAY_MS);
+    } else {
+      // Ensure index is 0 so landscape shows the first three consistently
+      setIndex(0);
+    }
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
     };
-  }, [events]);
+  }, [events, orientation]);
+
+  // Orientation listener
+  useEffect(() => {
+    function handleResize() {
+      setOrientation(window.innerHeight > window.innerWidth ? 'portrait' : 'landscape');
+    }
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Removed orientation effect
 
@@ -55,8 +80,7 @@ export const EventsRotator: React.FC = () => {
       {error && (
         <div style={{ background: '#ffeeba', color: '#856404', padding: 10, borderRadius: 4, margin: '10px auto', maxWidth: 600, textAlign: 'center' }}>{error}</div>
       )}
-      {/* Show just one event at a time, rotating */}
-      <LegacyEventCard event={events[index]} />
+        <LegacyEventCard event={events[index]} orientation={orientation} />
     </div>
   );
 };

@@ -12,7 +12,33 @@ export interface RoomLookupEntry {
   room_building: string;
 }
 
+/*
+301 Visitors’ Center
+303 Miron Special Events Room
+305 Dressler Executive Board Room
+310 Student Lounge
+311 Student Meeting Room
+312 Student Meeting Room
+313 Career Development Center
+314 Sports Media Center
+315/316 Advising Office
+318 Department Chair Offices Suite
+327 Time Warner Cable Conference Room
+328 IDEA Office
+330 Graduate Programs Office
+332 Online Programs Office
+340 Classroom
+345 Classroom
+350 Classroom
+355 Classroom
+*/
+
 const ROOM_LOOKUP: RoomLookupEntry[] = [
+  {
+    room_number: 102,
+    room_name: 'Lecture Hall',
+    room_building: 'Newhouse 1',
+  },
   {
     room_number: 140,
     room_name: 'Joyce Hergenhan Auditorium',
@@ -34,6 +60,11 @@ const ROOM_LOOKUP: RoomLookupEntry[] = [
     room_building: 'Newhouse 3',
   },
   {
+    room_number: 301,
+    room_name: 'Visitors’ Center',
+    room_building: 'Newhouse 1',
+  },
+  {
     room_number: 316,
     room_name: 'Undergraduate Advising and Records Office',
     room_building: '315/316 Newhouse 3',
@@ -42,6 +73,11 @@ const ROOM_LOOKUP: RoomLookupEntry[] = [
     room_number: 318,
     room_name: 'Horvitz Academic Programs Suite',
     room_building: '318 Newhouse 3',
+  },
+  {
+    room_number: 327,
+    room_name: 'Time Warner Cable Conference Room',
+    room_building: 'Newhouse 3',
   },
   {
     room_number: '',

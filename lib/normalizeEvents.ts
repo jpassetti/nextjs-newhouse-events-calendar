@@ -1,31 +1,33 @@
-import type { EventItem } from '../types/EventItem';
-// /lib/normalizeEvents.ts
+import type { SUEvent } from '../types/SUEvent';
 
-/**
- * Normalize SU Localist API event data to preserve the full event structure.
- * Flattens .event nesting if present, but does not remap or filter fields.
- */
-export function normalizeEvents(raw: unknown): EventItem[] {
-  let eventsArr: unknown[] = [];
-  if (
-    typeof raw === 'object' && raw !== null &&
-    'data' in raw &&
-    typeof (raw as { data?: unknown }).data === 'object' &&
-    (raw as { data?: unknown }).data !== null &&
-    'events' in (raw as { data: { events?: unknown } }).data!
-  ) {
-    eventsArr = ((raw as { data: { events: unknown[] } }).data.events);
-  } else if (
-    typeof raw === 'object' && raw !== null &&
-    'events' in raw
-  ) {
-    eventsArr = ((raw as { events: unknown[] }).events);
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return value !== null && typeof value === 'object';
+}
+
+function isEventWrapper(obj: unknown): obj is { event?: unknown } {
+  return isRecord(obj) && 'event' in obj;
+}
+
+function looksLikeSUEvent(obj: unknown): obj is SUEvent {
+  if (!isRecord(obj)) return false;
+  return (typeof (obj as any).id === 'number' || typeof (obj as any).id === 'string') && typeof (obj as any).title === 'string';
+}
+
+export function normalizeEvents(raw: unknown): SUEvent[] {
+  // Handle shapes: { events: [...] } or { data: { events: [...] } }
+  let candidate: unknown[] = [];
+  if (isRecord(raw)) {
+    if (Array.isArray((raw as any).events)) candidate = (raw as any).events;
+    else if (isRecord((raw as any).data) && Array.isArray(((raw as any).data as any).events)) candidate = ((raw as any).data as any).events;
   }
-  const events = eventsArr.map((e: unknown) => {
-    if (typeof e === 'object' && e !== null && 'event' in e) {
-      return (e as { event: unknown }).event;
+
+  const events: SUEvent[] = [];
+  for (const item of candidate) {
+    if (isEventWrapper(item) && isRecord(item.event) && looksLikeSUEvent(item.event)) {
+      events.push(item.event as SUEvent);
+    } else if (looksLikeSUEvent(item)) {
+      events.push(item as SUEvent);
     }
-    return e;
-  });
-  return events as EventItem[];
+  }
+  return events;
 }

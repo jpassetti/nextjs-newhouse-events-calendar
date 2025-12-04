@@ -102,6 +102,11 @@ html, body, #__next, main {
   overflow: hidden;
   color: black;
   font-family: 'ShermanSans', Arial, sans-serif;
+  background-color: #000e54;
+  background-image: url('/newhouse-school--blue-tone.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 h1, h2, h3, h4, h5, h6 {

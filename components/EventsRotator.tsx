@@ -75,12 +75,26 @@ export const EventsRotator: React.FC = () => {
   if (!events) return <div style={{ textAlign: 'center', padding: 40, fontSize: 24 }}>Loading…</div>;
   if (events.length === 0) return <div style={{ textAlign: 'center', padding: 40, fontSize: 24 }}>No upcoming events</div>;
 
+  // Determine number of cards to show on landscape
+  const cardsToShow = orientation === 'portrait' ? 1 : Math.min(events.length, 3);
+  const landscapeClass = orientation === 'landscape' ? `landscape-cards-${cardsToShow}` : '';
+
   return (
     <div>
       {error && (
         <div style={{ background: '#ffeeba', color: '#856404', padding: 10, borderRadius: 4, margin: '10px auto', maxWidth: 600, textAlign: 'center' }}>{error}</div>
       )}
+      {orientation === 'portrait' ? (
         <LegacyEventCard event={events[index]} orientation={orientation} />
+      ) : (
+        <div className={`landscape-rotator ${landscapeClass}`}>
+          {Array.from({ length: cardsToShow }).map((_, i) => (
+            <div key={i} className="landscape-card-wrapper">
+              <LegacyEventCard event={events[i]} orientation={orientation} />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

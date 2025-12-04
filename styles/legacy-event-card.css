@@ -109,6 +109,87 @@
   }
 }
 
+/* Landscape multi-card layout */
+.landscape-rotator {
+  display: table;
+  width: 100%;
+  height: 100vh;
+  table-layout: fixed;
+  text-align: center;
+}
+
+.landscape-card-wrapper {
+  display: table-cell;
+  vertical-align: top;
+  padding: 1rem;
+  width: 400px;
+}
+
+/* Center single card */
+.landscape-cards-1 {
+  text-align: center;
+}
+.landscape-cards-1 .landscape-card-wrapper {
+  display: table-cell;
+  vertical-align: top;
+}
+
+/* Center two cards */
+.landscape-cards-2 {
+  text-align: center;
+}
+.landscape-cards-2 .landscape-card-wrapper {
+  display: table-cell;
+  vertical-align: top;
+}
+
+/* Three cards evenly distributed */
+.landscape-cards-3 {
+  text-align: center;
+}
+.landscape-cards-3 .landscape-card-wrapper {
+  display: table-cell;
+  vertical-align: top;
+}
+
+/* Landscape cards: stack vertically (image + details) */
+@media screen and (min-width: 1200px) {
+  .landscape-rotator .event-card {
+    display: block;
+    width: 400px;
+    height: 100%;
+    padding: 0;
+    margin: 0 auto;
+    text-align: left;
+  }
+  
+  .landscape-rotator .event-image-container {
+    display: block;
+    width: 100%;
+    height: auto;
+    padding: 0;
+    background-color: #000e54;
+  }
+  
+  .landscape-rotator .event-image img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .landscape-rotator .event-details {
+    display: block;
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+    text-align: left;
+  }
+  
+  .landscape-rotator .event-details-inner {
+    padding: 0;
+    text-align: left;
+  }
+}
+
 /* Rotator three-up layout: container uses table layout; each child is table-cell */
 .rotator-three {
   display: table;
@@ -161,7 +242,7 @@
 
 .event-date,
 .event-location {
-  font-size: 32px;
+  font-size: 24px;
   margin-bottom: 6px;
   color: #000e54;
   display: table;
@@ -170,7 +251,7 @@
 
 .event-icon-box {
   display: table-cell;
-  width: 48px;
+  width: 36px;
   vertical-align: top;
   text-align: center;
 }
@@ -184,7 +265,6 @@
 
 .event-date-location-wrapper {
   border-top: 1px solid gray;
-  border-bottom: 1px solid gray;
   padding-top: 16px;
   padding-bottom: 16px;
 }

@@ -27,6 +27,7 @@ export const LegacyEventCard: React.FC<LegacyEventCardProps> = ({ event, orienta
   // Only truncate on portrait; show full description on landscape
   const rawDescription = event.description_text || event.description || '';
   const isTruncated = true; // Always truncate
+  const showDescription = orientation === 'portrait'; // Only show description on portrait
   
   // Always truncate and parse to plain text
   const description = truncate(parseHtmlDescription(rawDescription));
@@ -37,7 +38,7 @@ export const LegacyEventCard: React.FC<LegacyEventCardProps> = ({ event, orienta
   useEffect(() => {
     if (qrCanvasRef.current && eventUrl) {
       QRCode.toCanvas(qrCanvasRef.current, eventUrl, {
-        width: 150,
+        width: 120,
         margin: 1,
         color: {
           dark: '#000E54',
@@ -64,24 +65,24 @@ export const LegacyEventCard: React.FC<LegacyEventCardProps> = ({ event, orienta
           <h2 className={`event-title ${orientation === 'landscape' ? 'event-title--medium' : ''}`}>{title}</h2>
           <div className="event-date-location-wrapper">
           <div className="event-date">
-            <span className="event-icon-box"><Icon name="calendar" size={32} /></span>
+            <span className="event-icon-box"><Icon name="calendar" size={24} /></span>
             <span className="event-date-text">{date}</span>
           </div>
           {event.room_number && (
             <div className="event-location">
-              <span className="event-icon-box"><Icon name="location" size={32} /></span>
+              <span className="event-icon-box"><Icon name="location" size={24} /></span>
               <span className="event-location-text">
                 {event.room_number && <span dangerouslySetInnerHTML={{ __html: formatted }} />}
               </span>
             </div>
           )}
           </div>
-          {description && (
+          {showDescription && description && (
             <div className="event-description">
               {description}
             </div>
           )}
-          {isTruncated && (
+          {showDescription && isTruncated && (
             <p className="event-qr-message">Scan QR code to view all event information.</p>
           )}
         </div>

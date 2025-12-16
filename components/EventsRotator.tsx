@@ -1,6 +1,7 @@
 // /components/EventsRotator.tsx
 'use client';
 import React, { useEffect, useState, useRef } from 'react';
+import { toDataURL } from 'qrcode';
 import type { SUEvent } from '../types/SUEvent';
 import { LegacyEventCard } from './LegacyEventCard';
 
@@ -15,6 +16,7 @@ export const EventsRotator: React.FC = () => {
   });
   const [error, setError] = useState<string | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [noEventsQr, setNoEventsQr] = useState<string>('');
 
   // Fetch events with localStorage fallback
   useEffect(() => {
@@ -70,10 +72,40 @@ export const EventsRotator: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Removed orientation effect
+  // Generate QR for no-events screen (client-side)
+  useEffect(() => {
+    let mounted = true;
+    async function gen() {
+      try {
+        const dataUrl = await toDataURL('https://newhouse.syracuse.edu', { width: 300 });
+        if (mounted) setNoEventsQr(dataUrl);
+      } catch (e) {
+        // ignore - we'll fall back to empty
+      }
+    }
+    gen();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   if (!events) return <div style={{ textAlign: 'center', padding: 40, fontSize: 24 }}>Loading…</div>;
-  if (events.length === 0) return <div style={{ textAlign: 'center', padding: 40, fontSize: 24 }}>No upcoming events</div>;
+  if (events.length === 0)
+    return (
+      <div className="no-events-screen">
+        <div className="no-events-inner">
+          <h2 className="no-events-title">No upcoming events</h2>
+          <p className="no-events-text">Check back soon or visit <em>newhouse.syracuse.edu</em>.</p>
+          <div className="event-qr-code no-events-qr">
+            {noEventsQr ? (
+              <img src={noEventsQr} alt="QR code to Newhouse website" />
+            ) : (
+              <div style={{ width: 160, height: 160, margin: '0 auto' }} />
+            )}
+          </div>
+        </div>
+      </div>
+    );
 
   // Determine number of cards to show on landscape
   const cardsToShow = orientation === 'portrait' ? 1 : Math.min(events.length, 3);

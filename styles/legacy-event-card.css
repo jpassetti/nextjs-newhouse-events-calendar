@@ -67,6 +67,50 @@
   border-left: 4px solid #000e54;
 }
 
+/* No-events centered screen (IE11-friendly using table/table-cell) */
+.no-events-screen {
+  display: table;
+  width: 100%;
+  height: 100vh;
+  table-layout: fixed;
+  background: transparent; /* allow body background-image to show through */
+}
+.no-events-inner {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  padding: 1rem;
+}
+.no-events-title {
+  font-size: 48px;
+  color: #ffffff;
+  margin: 0 0 8px 0;
+}
+.no-events-text {
+  font-size: 24px;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+}
+.no-events-qr {
+  /* override generic .event-qr-code absolute positioning and background */
+  position: static;
+  display: block;
+  margin: 12px auto 0 auto;
+  text-align: center;
+  background: transparent;
+  padding: 8px;
+}
+.no-events-qr img {
+  width: 160px;
+  height: 160px;
+  display: block;
+  margin: 0 auto;
+  background: transparent;
+  padding: 0;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
 /* Landscape: side-by-side layout using table-cell */
 @media screen and (min-width: 1200px) {
   .event-card {

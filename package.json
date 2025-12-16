@@ -6,12 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "audit": "npm audit --audit-level=high"
   },
   "dependencies": {
     "framer-motion": "^12.23.12",
     "html-react-parser": "^5.2.10",
-    "next": "15.4.5",
+    "next": "15.5.9",
     "qrcode": "^1.5.4",
     "react": "19.1.0",
     "react-dom": "19.1.0"
